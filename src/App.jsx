@@ -18,13 +18,10 @@ import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   const [count, setCount] = useState(0);
 
-  let main = <Index />;
-
   return (
     <BrowserRouter>
       <Header />
       <Navbar />
-      {/* {main} */}
 
       <Routes>
         <Route path="/" element={<Index />} />
