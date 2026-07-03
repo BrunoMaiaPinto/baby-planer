@@ -12,6 +12,10 @@ const inputs = [
 ];
 
 function Contactos() {
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <PageCards
       description="Mantenha os contactos de emergência sempre à mão."
@@ -27,7 +31,7 @@ function Contactos() {
             ))}
           </ul>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <h3>Adicionar contacto</h3>
             {inputs.map((input) => (
               <Input
