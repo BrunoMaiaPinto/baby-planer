@@ -30,8 +30,8 @@ function Alimentacao() {
             <h3>Nova refeição</h3>
 
             <select name="refeicao" className="select">
-              <option value="🤱 Mamada">🤱 Mamada</option>
-              <option value="🍼 Fórmula">🍼 Fórmula</option>
+              <option>🤱 Mamada</option>
+              <option>🍼 Fórmula</option>
             </select>
 
             <input className="input" name="horario" type="time" required />
