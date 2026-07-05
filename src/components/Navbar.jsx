@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import Button from "./Button.jsx";
+import { NavLink } from "react-router-dom";
 
 const buttons = [
   { nome: "Alimentação", link: "/alimentacao" },
@@ -11,11 +10,17 @@ const buttons = [
 
 function Navbar() {
   return (
-    <nav>
-      {buttons.map((button, index) => (
-        <Link key={index} to={button.link}>
-          <Button key={index} nome={button.nome} />
-        </Link>
+    <nav aria-label="Navegação principal">
+      {buttons.map((button) => (
+        <NavLink
+          key={button.link}
+          to={button.link}
+          className={({ isActive }) =>
+            isActive ? "nav_button is-active" : "nav_button"
+          }
+        >
+          {button.nome}
+        </NavLink>
       ))}
     </nav>
   );

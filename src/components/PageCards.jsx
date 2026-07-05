@@ -1,13 +1,8 @@
-import Button from "./Button";
-
-function PageCards({ title, description, content }) {
+function PageCards({ description, content }) {
   return (
     <>
-      <h3>{description}</h3>
-      <div className="pagina">
-        {content}
-        {/* <Button nome="Adicionar" /> */}
-      </div>
+      {description ? <h3 className="page-description">{description}</h3> : null}
+      <div className="pagina">{content}</div>
     </>
   );
 }

@@ -1,8 +1,13 @@
-function Button({ nome, link, onClick }) {
+function Button({ nome, type = "button", onClick, disabled }) {
   return (
-    <>
-      <button className="nav_button">{nome}</button>
-    </>
+    <button
+      className="nav_button"
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {nome}
+    </button>
   );
 }
 

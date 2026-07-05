@@ -5,6 +5,7 @@ function Input({ name, type, placeholder }) {
       name={name}
       type={type}
       placeholder={placeholder}
+      aria-label={placeholder || name}
       required
     />
   );

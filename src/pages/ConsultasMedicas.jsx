@@ -1,7 +1,7 @@
 import PageCards from "../components/PageCards";
-import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useCollection } from "../hooks/useCollection";
 
 const inputs = [
   { name: "nome", type: "text", placeholder: "Local" },
@@ -11,24 +11,20 @@ const inputs = [
 ];
 
 function ConsultasMedicas() {
-  const [registos, setRegistos] = useState([]);
+  const { rows, add, remove } = useCollection("consultas");
 
-  function adicionar(e) {
+  async function adicionar(e) {
     e.preventDefault();
-
     const form = e.target;
-
-    const novoRegisto = {
+    await add({
       nome: form.nome.value,
       data: form.data.value,
       horario: form.horario.value,
       notas: form.notas.value,
-    };
-
-    setRegistos([...registos, novoRegisto]);
-
+    });
     form.reset();
   }
+
   return (
     <PageCards
       description="Agende as consultas e mantenha o calendário de saúde em dia."
@@ -49,14 +45,24 @@ function ConsultasMedicas() {
             <Button type="submit" nome="Adicionar" />
           </form>
 
-          {registos.map((item, index) => (
-            <div key={index} className="registos">
+          {rows.map((item) => (
+            <div key={item.id} className="registos">
               <p>{item.nome}</p>
               <p>{item.data}</p>
               <p>{item.horario}h</p>
-              <p>
-                <i>({item.notas})</i>
-              </p>
+              {item.notas ? (
+                <p>
+                  <i>({item.notas})</i>
+                </p>
+              ) : null}
+              <button
+                type="button"
+                className="remove_button"
+                aria-label="Remover consulta"
+                onClick={() => remove(item.id)}
+              >
+                ×
+              </button>
             </div>
           ))}
         </>

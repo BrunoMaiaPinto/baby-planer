@@ -1,7 +1,7 @@
 import PageCards from "../components/PageCards";
 import Button from "../components/Button";
-import { useState } from "react";
 import Input from "../components/Input";
+import { useCollection } from "../hooks/useCollection";
 
 const inputs = [
   { name: "item", type: "text", placeholder: "Item" },
@@ -9,20 +9,15 @@ const inputs = [
 ];
 
 function ListaCompras() {
-  const [registos, setRegistos] = useState([]);
+  const { rows, add, remove } = useCollection("compras");
 
-  function adicionar(e) {
+  async function adicionar(e) {
     e.preventDefault();
-
     const form = e.target;
-
-    const novoRegisto = {
+    await add({
       item: form.item.value,
       quantidade: form.quantidade.value,
-    };
-
-    setRegistos([...registos, novoRegisto]);
-
+    });
     form.reset();
   }
 
@@ -45,10 +40,18 @@ function ListaCompras() {
             <Button type="submit" nome="Adicionar" />
           </form>
 
-          {registos.map((item, index) => (
-            <div key={index} className="registos">
+          {rows.map((item) => (
+            <div key={item.id} className="registos">
               <p>{item.item}</p>
               <p>{item.quantidade}</p>
+              <button
+                type="button"
+                className="remove_button"
+                aria-label="Remover item"
+                onClick={() => remove(item.id)}
+              >
+                ×
+              </button>
             </div>
           ))}
         </>

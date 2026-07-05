@@ -1,23 +1,18 @@
-import { useState } from "react";
 import PageCards from "../components/PageCards";
 import Button from "../components/Button";
+import { useCollection } from "../hooks/useCollection";
 
 function Alimentacao() {
-  const [registos, setRegistos] = useState([]);
+  const { rows, add, remove } = useCollection("alimentacao");
 
-  function adicionar(e) {
+  async function adicionar(e) {
     e.preventDefault();
-
     const form = e.target;
-
-    const novoRegisto = {
+    await add({
       refeicao: form.refeicao.value,
       horario: form.horario.value,
       quantidade: form.quantidade.value,
-    };
-
-    setRegistos([...registos, novoRegisto]);
-
+    });
     form.reset();
   }
 
@@ -29,14 +24,30 @@ function Alimentacao() {
           <form onSubmit={adicionar}>
             <h3>Nova refeição</h3>
 
-            <select name="refeicao" className="select">
+            <label className="sr-only" htmlFor="refeicao">
+              Tipo de refeição
+            </label>
+            <select id="refeicao" name="refeicao" className="select">
               <option>🤱 Mamada</option>
               <option>🍼 Fórmula</option>
             </select>
 
-            <input className="input" name="horario" type="time" required />
-
+            <label className="sr-only" htmlFor="horario">
+              Horário
+            </label>
             <input
+              id="horario"
+              className="input"
+              name="horario"
+              type="time"
+              required
+            />
+
+            <label className="sr-only" htmlFor="quantidade">
+              Quantidade em ml
+            </label>
+            <input
+              id="quantidade"
               className="input"
               name="quantidade"
               type="number"
@@ -47,13 +58,19 @@ function Alimentacao() {
             <Button type="submit" nome="Adicionar" />
           </form>
 
-          <br />
-
-          {registos.map((item, index) => (
-            <div key={index} className="registos">
+          {rows.map((item) => (
+            <div key={item.id} className="registos">
               <p>{item.refeicao}</p>
               <p>{item.horario}</p>
               <p>{item.quantidade} ml</p>
+              <button
+                type="button"
+                className="remove_button"
+                aria-label="Remover registo"
+                onClick={() => remove(item.id)}
+              >
+                ×
+              </button>
             </div>
           ))}
         </>
